@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rubik's Cube 3D</title>
+
+    <!-- Import Map for Three.js ES Modules -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .ui-overlay {
+            position: fixed;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .header {
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            text-align: center;
+            color: #eaeaea;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #c41e3a, #ff5800, #ffd500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 0.25rem;
+        }
+
+        .controls {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-shuffle {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: #eaeaea;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .instructions {
+            position: fixed;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        #win-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem 3rem;
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s ease-out;
+            z-index: 200;
+        }
+
+        #win-message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #win-message h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <header class="ui-overlay header">
+        <h1>Rubik's Cube</h1>
+        <p>Drag to rotate faces • Right-drag to orbit</p>
+    </header>
+
+    <div class="instructions">
+        Click and drag on faces to rotate them
+    </div>
+
+    <footer class="ui-overlay controls">
+        <button id="shuffle-btn" class="btn btn-shuffle">🔀 Shuffle</button>
+        <button id="reset-btn" class="btn btn-reset">↺ Reset</button>
+    </footer>
+
+    <div id="win-message">
+        <h2>🎉 Solved!</h2>
+        <p>Congratulations!</p>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
