@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RubiksCube } from './core/RubiksCube.js';
 import { CubeRenderer } from './renderer/CubeRenderer.js';
+import { Cube2DRenderer } from './renderer/Cube2DRenderer.js';
 import { FaceControls } from './controls/FaceControls.js';
 
 class Game {
@@ -19,6 +20,12 @@ class Game {
 
         // 3D Renderer
         this.renderer = new CubeRenderer(this.container, this.cube);
+
+        // 2D Visualization (syncs with cube state)
+        this.renderer2D = new Cube2DRenderer(
+            document.getElementById('cube-2d'),
+            this.cube
+        );
 
         // Orbit controls for camera rotation
         this.orbitControls = new OrbitControls(
@@ -89,16 +96,21 @@ class Game {
             await this.renderer.animateRotation(face, clockwise, 100);
         }
 
+        this.renderer2D.syncWithState();
         this.faceControls.setEnabled(true);
     }
 
     reset() {
         this.cube.reset();
         this.renderer.syncWithState();
+        this.renderer2D.syncWithState();
         document.getElementById('win-message').classList.remove('show');
     }
 
     onMoveComplete() {
+        // Sync 2D view
+        this.renderer2D.syncWithState();
+
         // Check for win
         if (this.cube.isSolved()) {
             document.getElementById('win-message').classList.add('show');

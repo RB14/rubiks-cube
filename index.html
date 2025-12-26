@@ -116,6 +116,42 @@
             text-align: center;
         }
 
+        /* 2D Cube Visualization */
+        .cube-2d-container {
+            position: fixed;
+            bottom: 5.5rem;
+            right: 1rem;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cube-2d-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .cube-2d-face {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px;
+            padding: 1px;
+            background: #222;
+            border-radius: 2px;
+        }
+
+        .cube-2d-cell {
+            width: 8px;
+            height: 8px;
+            border-radius: 1px;
+            transition: background-color 0.15s ease;
+        }
+
         #win-message {
             position: fixed;
             top: 50%;
@@ -151,6 +187,8 @@
     <div class="instructions">
         Click and drag on faces to rotate them
     </div>
+
+    <div id="cube-2d" class="cube-2d-container"></div>
 
     <footer class="ui-overlay controls">
         <button id="shuffle-btn" class="btn btn-shuffle">🔀 Shuffle</button>
