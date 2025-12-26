@@ -70,7 +70,18 @@ export class CubeRenderer {
     setupCamera() {
         const aspect = this.container.clientWidth / this.container.clientHeight;
         this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-        this.camera.position.set(5, 4, 6);
+
+        // Use max zoom out distance (15) as default to show full cube with room to spare
+        const distance = 15;
+        const baseDirection = { x: 5, y: 4, z: 6 };
+        const baseMagnitude = Math.sqrt(baseDirection.x**2 + baseDirection.y**2 + baseDirection.z**2);
+        const scale = distance / baseMagnitude;
+
+        this.camera.position.set(
+            baseDirection.x * scale,
+            baseDirection.y * scale,
+            baseDirection.z * scale
+        );
         this.camera.lookAt(0, 0, 0);
     }
 

@@ -152,6 +152,45 @@
             transition: background-color 0.15s ease;
         }
 
+        /* View Touchpad - area for single-finger view rotation */
+        .view-touchpad {
+            position: fixed;
+            top: 5.5rem;
+            left: 1rem;
+            right: 1rem;
+            height: 25vh;
+            max-height: 150px;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .view-touchpad::after {
+            content: '↔ drag to rotate view';
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.75rem;
+            pointer-events: none;
+        }
+
+        .view-touchpad.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Hide mobile controls on desktop */
+        @media (hover: hover) and (pointer: fine) {
+            .view-touchpad {
+                display: none;
+            }
+        }
+
         #win-message {
             position: fixed;
             top: 50%;
@@ -189,6 +228,8 @@
     </div>
 
     <div id="cube-2d" class="cube-2d-container"></div>
+
+    <div id="view-touchpad" class="view-touchpad"></div>
 
     <footer class="ui-overlay controls">
         <button id="shuffle-btn" class="btn btn-shuffle">🔀 Shuffle</button>

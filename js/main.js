@@ -10,6 +10,7 @@ import { RubiksCube } from './core/RubiksCube.js';
 import { CubeRenderer } from './renderer/CubeRenderer.js';
 import { Cube2DRenderer } from './renderer/Cube2DRenderer.js';
 import { FaceControls } from './controls/FaceControls.js';
+import { ViewTouchpad } from './controls/ViewTouchpad.js';
 
 class Game {
     constructor() {
@@ -38,6 +39,12 @@ class Game {
         this.faceControls = new FaceControls(this.renderer, this.orbitControls);
         this.faceControls.setOnMoveComplete(() => this.onMoveComplete());
 
+        // View touchpad for mobile (single-finger view rotation)
+        this.viewTouchpad = new ViewTouchpad(
+            document.getElementById('view-touchpad'),
+            this.orbitControls
+        );
+
         // UI
         this.setupUI();
 
@@ -58,11 +65,12 @@ class Game {
             RIGHT: THREE.MOUSE.ROTATE,
         };
 
-        // For touch: two-finger rotate, pinch zoom
+        // For touch: two-finger rotate only (no zoom)
         this.orbitControls.touches = {
             ONE: null,
-            TWO: THREE.TOUCH.DOLLY_ROTATE,
+            TWO: THREE.TOUCH.ROTATE,
         };
+        this.orbitControls.enableZoom = false;
 
         // Update loop for damping
         const updateOrbit = () => {
